@@ -1,0 +1,61 @@
+
+> adv-weatherapp@0.0.0 lint
+> eslint .
+
+
+C:\Dev\Adv-Weatherapp\src\App.jsx
+  9:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Dev\Adv-Weatherapp\src\components\CurrentWeather.jsx
+  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Dev\Adv-Weatherapp\src\components\ForecastList.jsx
+  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Dev\Adv-Weatherapp\src\components\SearchBar.jsx
+  4:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Dev\Adv-Weatherapp\src\components\WeatherChart.jsx
+  77:32  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  75 |               domain={[0, 100]}
+  76 |             />
+> 77 |             <Tooltip content={<CustomTooltip />} />
+     |                                ^^^^^^^^^^^^^ This component is created during render
+  78 |             <Area 
+  79 |               yAxisId="left"
+  80 |               type="monotone" 
+
+  23 |   }));
+  24 |
+> 25 |   const CustomTooltip = ({ active, payload, label }) => {
+     |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 26 |     if (active && payload && payload.length) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 27 |       return (
+     …
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 35 |     return null;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 36 |   };
+     | ^^^^ The component is created during render here
+  37 |
+  38 |   return (
+  39 |     <div className="glass-card p-6 w-full h-[400px]">  react-hooks/static-components
+
+C:\Dev\Adv-Weatherapp\src\context\ThemeContext.jsx
+  35:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Dev\Adv-Weatherapp\src\context\WeatherContext.jsx
+  25:14  error  'err' is defined but never used                                                                                                 no-unused-vars
+  62:8   error  'err' is defined but never used                                                                                                 no-unused-vars
+  83:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Dev\Adv-Weatherapp\src\services\weatherApi.js
+   7:3  error  Unnecessary try/catch wrapper  no-useless-catch
+  28:3  error  Unnecessary try/catch wrapper  no-useless-catch
+
+✖ 11 problems (11 errors, 0 warnings)
+
