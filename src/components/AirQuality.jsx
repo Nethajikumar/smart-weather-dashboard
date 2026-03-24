@@ -36,49 +36,48 @@ const AirQuality = () => {
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className={`glass-card p-6 w-full h-full flex flex-col justify-between border ${aqiStatus.border}`}
+      className={`glass-card p-4 md:p-5 w-full h-fit flex flex-col border ${aqiStatus.border}`}
     >
-      <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
-        <Wind className="w-5 h-5 text-blue-500" /> Air Quality & UV
+      <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4 flex items-center gap-2">
+        <Wind className="w-4 h-4 text-blue-500" /> Air Quality & UV
       </h3>
       
-      <div className="flex flex-col gap-6 flex-1 justify-center">
+      <div className="flex flex-col gap-4">
         {/* AQI Main */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between bg-black/5 dark:bg-white/5 p-3 rounded-xl">
           <div>
-            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">US AQI</p>
-            <p className="text-5xl font-bold tracking-tighter">{Math.round(us_aqi)}</p>
+            <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-0.5">US AQI</p>
+            <p className="text-3xl font-black tracking-tighter">{Math.round(us_aqi)}</p>
           </div>
-          <div className={`px-4 py-2 rounded-full ${aqiStatus.bg} ${aqiStatus.color} font-semibold shadow-sm`}>
+          <div className={`px-3 py-1 rounded-full text-xs ${aqiStatus.bg} ${aqiStatus.color} font-bold shadow-sm border border-white/10`}>
             {aqiStatus.label}
           </div>
         </div>
 
         {/* Pollutants grid */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="glass p-4 rounded-xl flex flex-col items-center text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1 font-medium">PM 2.5</p>
-            <p className="text-lg font-bold">{pm2_5} <span className="text-xs font-normal text-gray-400">µg/m³</span></p>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="bg-black/5 dark:bg-white/5 p-2 rounded-lg flex flex-col items-center text-center border border-white/5">
+            <p className="text-[10px] text-gray-500 dark:text-gray-400 mb-0.5 font-bold">PM 2.5</p>
+            <p className="text-sm font-bold">{pm2_5} <small className="text-[8px] font-normal opacity-50">µg/m³</small></p>
           </div>
-          <div className="glass p-4 rounded-xl flex flex-col items-center text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1 font-medium">PM 10</p>
-            <p className="text-lg font-bold">{pm10} <span className="text-xs font-normal text-gray-400">µg/m³</span></p>
+          <div className="bg-black/5 dark:bg-white/5 p-2 rounded-lg flex flex-col items-center text-center border border-white/5">
+            <p className="text-[10px] text-gray-500 dark:text-gray-400 mb-0.5 font-bold">PM 10</p>
+            <p className="text-sm font-bold">{pm10} <small className="text-[8px] font-normal opacity-50">µg/m³</small></p>
           </div>
         </div>
 
         {/* UV Index */}
-        <div className="flex items-center justify-between glass p-5 rounded-2xl mt-2 relative overflow-hidden">
-          <div className={`absolute left-0 top-0 bottom-0 w-1 ${aqiStatus.bg.split('/')[0].replace('bg-', 'bg-')}`} />
-          <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-full ${aqiStatus.bg}`}>
-              <Sun className={`w-6 h-6 ${uvStatus.color}`} />
+        <div className="flex items-center justify-between bg-black/5 dark:bg-white/5 p-3 rounded-xl border border-white/5">
+          <div className="flex items-center gap-2">
+            <div className={`p-1.5 rounded-full ${aqiStatus.bg}`}>
+              <Sun className={`w-4 h-4 ${uvStatus.color}`} />
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-300">UV Index</p>
-              <p className={`text-sm font-bold ${uvStatus.color}`}>{uvStatus.label}</p>
+              <p className="text-[10px] font-bold text-gray-500 uppercase">UV Index</p>
+              <p className={`text-[10px] font-bold ${uvStatus.color}`}>{uvStatus.label}</p>
             </div>
           </div>
-          <p className="text-3xl font-bold">{uv_index}</p>
+          <p className="text-2xl font-black">{uv_index}</p>
         </div>
       </div>
     </motion.div>

@@ -38,10 +38,10 @@ const LiveMap = () => {
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="glass-card p-6 w-full h-[400px] flex flex-col"
+      className="glass-card p-4 md:p-5 w-full h-[300px] flex flex-col border border-white/10"
     >
-      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <MapIcon className="w-5 h-5 text-emerald-500" /> Interactive Map
+      <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 flex items-center gap-2">
+        <MapIcon className="w-4 h-4 md:w-5 md:h-5 text-emerald-500" /> Interactive Map
       </h3>
       <div className="flex-1 rounded-xl overflow-hidden relative z-0 shadow-inner border border-white/10">
         <MapContainer 

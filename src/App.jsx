@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from './context/ThemeContext';
 import { useWeather } from './context/WeatherContext';
 import { Moon, Sun } from 'lucide-react';
@@ -16,23 +16,25 @@ import { SkeletonLoader } from './components/SkeletonLoader';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const getBgClass = (isDarkMode, isDay, code) => {
-  if (isDarkMode) return 'bg-gray-950 text-white';
-  if (!isDay) return 'bg-gradient-to-br from-indigo-900 to-gray-900 text-white';
+  const base = 'transition-all duration-1000 ease-in-out ';
+  
+  if (isDarkMode) return base + 'bg-slate-950 text-white';
+  if (!isDay) return base + 'bg-gradient-to-br from-indigo-950 via-purple-900 to-slate-900 text-white';
   
   // Sunny
-  if (code <= 1) return 'bg-gradient-to-br from-blue-400 to-cyan-200 text-gray-900';
+  if (code <= 1) return base + 'bg-gradient-to-br from-blue-400 via-sky-300 to-amber-100 text-gray-900';
   // Cloudy
-  if (code <= 3) return 'bg-gradient-to-br from-gray-300 to-gray-400 text-gray-900';
+  if (code <= 3) return base + 'bg-gradient-to-br from-slate-300 via-gray-400 to-slate-500 text-gray-900';
   // Fog
-  if (code === 45 || code === 48) return 'bg-gradient-to-br from-gray-400 to-slate-500 text-gray-900';
+  if (code === 45 || code === 48) return base + 'bg-gradient-to-br from-gray-400 via-slate-500 to-gray-600 text-gray-900';
   // Rain
-  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'bg-gradient-to-br from-slate-600 to-blue-800 text-white';
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return base + 'bg-gradient-to-br from-slate-700 via-blue-900 to-indigo-950 text-white';
   // Snow
-  if ((code >= 71 && code <= 77) || code >= 85) return 'bg-gradient-to-br from-blue-100 to-cyan-100 text-gray-900';
+  if ((code >= 71 && code <= 77) || code >= 85) return base + 'bg-gradient-to-br from-blue-50 via-indigo-50 to-slate-200 text-gray-900';
   // Thunderstorm
-  if (code >= 95) return 'bg-gradient-to-br from-gray-800 to-purple-900 text-white';
+  if (code >= 95) return base + 'bg-gradient-to-br from-gray-900 via-purple-950 to-black text-white';
   
-  return 'bg-gradient-to-br from-blue-400 to-cyan-200 text-gray-900';
+  return base + 'bg-gradient-to-br from-blue-400 to-cyan-200 text-gray-900';
 };
 
 function App() {
@@ -52,34 +54,53 @@ function App() {
   
   const bgClass = getBgClass(isDarkMode, isDay, weatherCode);
 
+  const [activeTab, setActiveTab] = useState('current');
+
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''} transition-colors duration-500`}>
       <div className={`min-h-screen w-full transition-colors duration-1000 ${bgClass}`}>
-        <main className="container mx-auto px-4 py-8 md:py-12 max-w-6xl">
+        <main className="container mx-auto px-4 py-6 md:py-12 max-w-7xl">
           {/* Header */}
-          <header className="flex justify-between items-center mb-10">
-            <h1 className="text-3xl font-bold tracking-tight opacity-90">
+          <header className="flex justify-between items-center mb-8 md:mb-12">
+            <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent opacity-95">
               Smart Weather
             </h1>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3">
               <button
                 onClick={toggleUnit}
-                className="w-12 h-12 flex items-center justify-center rounded-full glass hover:bg-white/50 dark:hover:bg-black/50 transition-all shadow-sm font-bold text-lg"
+                className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full glass hover:bg-white/50 dark:hover:bg-black/50 transition-all shadow-sm font-bold text-base md:text-lg"
                 aria-label="Toggle Temperature Unit"
               >
                 °{tempUnit}
               </button>
               <button
                 onClick={toggleTheme}
-                className="p-3 w-12 h-12 flex items-center justify-center rounded-full glass hover:bg-white/50 dark:hover:bg-black/50 transition-all shadow-sm"
+                className="p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full glass hover:bg-white/50 dark:hover:bg-black/50 transition-all shadow-sm"
                 aria-label="Toggle Theme"
               >
-                {isDarkMode ? <Sun className="w-6 h-6 text-yellow-300" /> : <Moon className="w-6 h-6 text-indigo-800" />}
+                {isDarkMode ? <Sun className="w-5 h-5 md:w-6 md:h-6 text-yellow-300" /> : <Moon className="w-5 h-5 md:w-6 md:h-6 text-indigo-800" />}
               </button>
             </div>
           </header>
 
           <SearchBar />
+
+          {/* Mobile Tabs */}
+          <div className="flex lg:hidden mb-6 bg-black/5 dark:bg-white/5 p-1 rounded-xl glass">
+            {['current', 'forecast', 'planner'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`flex-1 py-2.5 text-sm font-bold capitalize rounded-lg transition-all ${
+                  activeTab === tab 
+                    ? 'bg-white/40 dark:bg-white/20 shadow-sm text-blue-600 dark:text-blue-300' 
+                    : 'text-gray-500 dark:text-gray-400'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
 
           <AnimatePresence mode="wait">
             {loading ? (
@@ -107,34 +128,50 @@ function App() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.5 }}
               >
-                <CurrentWeather />
-                <div className="mb-8">
-                  <SmartInsights />
-                </div>
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                  {/* Left Column (Main Charts & Forecast) */}
-                  <div className="lg:col-span-3 space-y-8">
-                    <WeatherChart />
-                    
-                    {/* Middle grid for Advanced Components */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                      <div className="md:col-span-1">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-10 items-start">
+                  {/* Left/Main Column */}
+                  <div className={`lg:col-span-3 space-y-6 md:space-y-10 ${activeTab !== 'current' && activeTab !== 'planner' ? 'hidden lg:block' : ''}`}>
+                    {/* Current Weather - Always top in main column */}
+                    <div className={`${activeTab !== 'current' ? 'hidden lg:block' : ''}`}>
+                      <CurrentWeather />
+                    </div>
+
+                    {/* 2x2 Core Info Grid (Desktop) */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
+                      {/* Top Left: Map (Planner Tab) */}
+                      <div className={`${activeTab !== 'planner' ? 'hidden lg:block' : ''}`}>
+                        <LiveMap />
+                      </div>
+                      
+                      {/* Top Right: Air Quality (Planner Tab) */}
+                      <div className={`${activeTab !== 'planner' ? 'hidden lg:block' : ''}`}>
                         <AirQuality />
                       </div>
-                      <div className="md:col-span-2">
-                        <LiveMap />
+
+                      {/* Bottom Left: Sun & Moon (Planner Tab) */}
+                      <div className={`${activeTab !== 'planner' ? 'hidden lg:block' : ''}`}>
+                        <CelestialInfo />
+                      </div>
+
+                      {/* Bottom Right: Trip Planner (Planner Tab) */}
+                      <div className={`${activeTab !== 'planner' ? 'hidden lg:block' : ''}`}>
+                        <TripPlanner />
                       </div>
                     </div>
 
-                    {/* Bottom grid for Celestial and Trip Planner */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                      <CelestialInfo />
-                      <TripPlanner />
+                    {/* Full Width Visuals */}
+                    <div className="space-y-6 md:space-y-10">
+                      <div className={`${activeTab !== 'current' ? 'hidden lg:block' : ''}`}>
+                        <SmartInsights />
+                      </div>
+                      <div className={`${activeTab !== 'current' ? 'hidden lg:block' : ''}`}>
+                        <WeatherChart />
+                      </div>
                     </div>
                   </div>
 
-                  {/* Right Column (7-Day Forecast Sidebar) */}
-                  <div className="lg:col-span-1">
+                  {/* Right Column (Focus for Forecast tab) */}
+                  <div className={`lg:col-span-1 ${activeTab !== 'forecast' ? 'hidden lg:block' : ''}`}>
                     <ForecastList />
                   </div>
                 </div>

@@ -40,6 +40,27 @@
     @apply bg-white/20 dark:bg-black/20 backdrop-blur-md border border-white/30 dark:border-white/10 shadow-xl;
   }
   .glass-card {
-    @apply bg-white/40 dark:bg-black/40 backdrop-blur-lg border border-white/40 dark:border-white/20 shadow-lg rounded-2xl;
+    @apply bg-white/40 dark:bg-black/40 backdrop-blur-lg border border-white/40 dark:border-white/20 shadow-lg rounded-2xl p-4 md:p-6 lg:p-8 transition-all duration-300;
+  }
+  .glass-card:hover {
+    @apply border-white/60 dark:border-white/30 shadow-2xl scale-[1.01];
+  }
+
+  /* Animations */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes slow-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+  }
+  .animate-slow-pulse {
+    animation: slow-pulse 4s ease-in-out infinite;
   }
 }

@@ -34,11 +34,11 @@ const WeatherChart = () => {
     temp: Math.round(convertTemp(weatherData.hourly.temperature_2m[startIndex + i] || 0, tempUnit)),
     humidity: weatherData.hourly.relative_humidity_2m[startIndex + i] || 0
   }));  return (
-    <div className="glass-card p-6 w-full h-[400px]">
-      <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100">24-Hour Forecast</h3>
-      <div className="h-[300px] w-full mt-4">
+    <div className="glass-card p-4 md:p-6 w-full h-[300px] md:h-[400px]">
+      <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-6 text-gray-800 dark:text-gray-100">24-Hour Forecast</h3>
+      <div className="h-[220px] md:h-[300px] w-full mt-2 md:mt-4">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+          <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
             <defs>
               <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#f97316" stopOpacity={0.4}/>

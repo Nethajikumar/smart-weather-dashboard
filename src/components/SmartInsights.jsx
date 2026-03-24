@@ -119,15 +119,15 @@ const SmartInsights = () => {
   };
 
   return (
-    <div className="glass-card p-6 w-full">
-      <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100 flex items-center gap-2">
-        <Lightbulb className="w-5 h-5 text-yellow-500" /> Smart Insights
+    <div className="glass-card p-4 md:p-6 w-full h-fit flex flex-col border border-white/10">
+      <h3 className="text-lg md:text-xl font-semibold mb-4 md:mb-6 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+        <Lightbulb className="w-4 h-4 md:w-5 md:h-5 text-yellow-500" /> Smart Insights
       </h3>
       <motion.div 
         variants={container}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-1 gap-4"
+        className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4"
       >
         {insights.slice(0, 3).map((insight) => {
           const Icon = insight.icon;
@@ -135,14 +135,14 @@ const SmartInsights = () => {
             <motion.div 
               key={insight.id}
               variants={item}
-              className={`p-4 rounded-xl flex items-start gap-4 ${insight.bg} border border-white/10`}
+              className={`p-3 md:p-4 rounded-xl flex items-start gap-3 md:gap-4 ${insight.bg} border border-white/10`}
             >
-              <div className={`p-2 rounded-full glass bg-white/50 dark:bg-black/50 ${insight.color}`}>
-                <Icon className="w-5 h-5" />
+              <div className={`p-2 rounded-full glass bg-white/50 dark:bg-black/50 ${insight.color} shrink-0`}>
+                <Icon className="w-4 h-4 md:w-5 md:h-5" />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800 dark:text-gray-200">{insight.title}</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{insight.message}</p>
+                <h4 className="font-semibold text-sm md:text-base text-gray-800 dark:text-gray-200">{insight.title}</h4>
+                <p className="text-[10px] md:text-sm text-gray-600 dark:text-gray-400 mt-0.5 md:mt-1 font-medium">{insight.message}</p>
               </div>
             </motion.div>
           );
